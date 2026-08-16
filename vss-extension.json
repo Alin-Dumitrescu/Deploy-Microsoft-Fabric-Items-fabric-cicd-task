@@ -1,0 +1,65 @@
+{
+    "manifestVersion": 1,
+    "id": "deploy-microsoft-fabric-items-fabric-cicd",
+    "name": "Deploy Microsoft Fabric items with fabric-cicd",
+    "version": "0.2.8",
+    "publisher": "ChantifiedLens",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services.Cloud"
+        }
+    ],
+    "galleryFlags": [
+        "Public",
+        "Preview"
+    ],
+    "description": "Deploys Microsoft Fabric workspace items using fabric-cicd Python library.",
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "icons": {
+        "default": "images/icon.png"        
+    },
+    "files": [
+        {
+            "path": "deployMicrosoftFabricItems"
+        },
+        {
+            "path": "images",
+            "addressable": true
+        }
+    ],
+    "license": "MIT",
+    "links": {
+        "homepage": {
+            "uri": "https://github.com/ChantifiedLens/Deploy-Microsoft-Fabric-Items-fabric-cicd-task"
+        },
+        "support": {
+            "uri": "https://github.com/ChantifiedLens/Deploy-Microsoft-Fabric-Items-fabric-cicd-task/issues"
+        },
+        "repository": {
+            "uri": "https://github.com/ChantifiedLens/Deploy-Microsoft-Fabric-Items-fabric-cicd-task"
+        },
+        "privacy": {
+            "uri": "https://raw.githubusercontent.com/ChantifiedLens/Deploy-Microsoft-Fabric-Items-fabric-cicd-task/main/PRIVACY.md"
+        }
+    },
+    "contributions": [
+        {
+            "id": "custom-build-release-task",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "deployMicrosoftFabricItems"
+            }
+        }
+    ],
+    "content": {
+        "details": {
+            "path": "readme.md"
+        }
+    }
+
+}

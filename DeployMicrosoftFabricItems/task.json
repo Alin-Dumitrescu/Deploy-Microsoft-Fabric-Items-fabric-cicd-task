@@ -1,0 +1,131 @@
+{
+  "id": "9b59fb98-7c19-49cf-8751-e7564efdc0d3",
+  "name": "DeployMicrosoftFabricItems",
+  "friendlyName": "Deploy Microsoft Fabric items",
+  "description": "Deploys Microsoft Fabric workspace items using fabric-cicd Python library.",
+  "author": "Chantified Lens",
+  "helpMarkDown": "Use this task to deploy Microsoft Fabric workspace items using fabric-cicd Python library.",
+  "category": "Utility",
+  "visibility": [
+    "Build",
+    "Release"
+  ],
+  "demands": [],
+  "version": {
+    "Major": "0",
+    "Minor": "2",
+    "Patch": "8"
+  },
+  "minimumAgentVersion": "1.95.0",
+  "instanceNameFormat": "DeployMicrosoftFabricItems $(message)",
+  "inputs": [
+    {
+      "name": "authType",
+      "type": "pickList",
+      "label": "Authentication Type",
+      "required": false,
+      "defaultValue": "serviceConnection",
+      "options": {
+        "serviceConnection": "Service Connection",
+        "servicePrincipal": "Service Principal"
+      },
+      "helpMarkDown": "Select the authentication method to use for deploying Microsoft Fabric items."
+    },
+    {
+      "name": "azureSubscription",
+      "type": "connectedService:AzureRM",
+      "label": "Azure subscription (service connection)",
+      "required": false,
+      "visibleRule": "authType = serviceConnection",
+      "helpMarkDown": "Optional. If provided, credentials are taken from the service connection."
+    },
+    {
+      "name": "azureClientId",
+      "type": "string",
+      "label": "Azure Service Principal client id",
+      "required": false,
+      "visibleRule": "authType = servicePrincipal",
+      "helpMarkDown": "Azure Service Principal client id. Required if client secret is provided."
+    },
+    {
+      "name": "azureClientSecret",
+      "type": "secureString",
+      "label": "Azure Service Principal client secret",
+      "required": false,
+      "visibleRule": "authType = servicePrincipal",
+      "helpMarkDown": "Azure Service Principal client secret. Required if client id is provided."
+    },
+    {
+      "name": "azureTenantId",
+      "type": "string",
+      "label": "Azure Tenant id",
+      "required": false,
+      "visibleRule": "authType = servicePrincipal",
+      "helpMarkDown": "Azure Tenant id is required if client id and secret are provided."
+    },
+    {
+      "name": "environmentName",
+      "type": "string",
+      "label": "Target environment name",
+      "defaultValue": "test",
+      "required": true,
+      "helpMarkDown": "Name of the target environment in the Microsoft Fabric workspace."
+    },
+    {
+      "name": "includeConfig",
+      "type": "boolean",
+      "label": "Include config file",
+      "defaultValue": false,
+      "required": false,
+      "helpMarkDown": "Include the configuration file in the deployment."
+    },
+    {
+      "name": "configFilePath",
+      "type": "string",
+      "label": "Config file path",
+      "defaultValue": "",
+      "required": false,
+      "visibleRule": "includeConfig = true",
+      "helpMarkDown": "Path to the configuration file in source repository. Relative to repository directory. Example: './workspace/config.yml'"
+    },
+    {
+      "name": "workspaceId",
+      "type": "string",
+      "label": "Workspace Id",
+      "required": false,
+      "visibleRule": "includeConfig = false",
+      "helpMarkDown": "Id of the Microsoft Fabric workspace to deploy to if no config file specified."
+    },
+    {
+      "name": "repositoryDirectory",
+      "type": "string",
+      "label": "Repository directory",
+      "defaultValue": "$(Build.SourcesDirectory)/workspace",
+      "required": false,
+      "visibleRule": "includeConfig = false",
+      "helpMarkDown": "Location of the repository directory. For example, '$(System.DefaultWorkingDirectory)/fabric-cicd-sample/workspace' in Release Pipelines and '$(Build.SourcesDirectory)/workspace' in YAML Pipelines. The task will look for Microsoft Fabric items to deploy in this directory."
+    },
+    {
+      "name": "itemsInScope",
+      "type": "string",
+      "label": "Items in scope",
+      "defaultValue": "",
+      "required": false,
+      "visibleRule": "includeConfig = false",
+      "helpMarkDown": "List of items to deploy. If empty, all items will be deployed. Example: 'dataflows,dashboards'"
+    },
+        {
+      "name": "fabricCicdVersion",
+      "type": "string",
+      "label": "fabric-cicd version",
+      "defaultValue": "",
+      "required": false,
+      "helpMarkDown": "Version of the fabric-cicd Python library to use."
+    }
+  ],
+  "execution": {
+    "Node20_1": {
+      "target": "scripts/index.js"
+    }
+  }
+}
